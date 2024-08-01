@@ -1,0 +1,10 @@
+1. cấu trúc thư mục
+a, app
+- tất cả code được chứa trong folder app
+- console: (laravel 11 k có) tất cả các câu lệnh ở môi
+trường command line. khi viết ứng dụng, sẽ có ứng dụng
+chạy trên trình duyệt thông qua giao thức http nhưng
+cũng có code chạy qua console
+- exception (laravel 11 k có) chứa những files liên
+quan đến điều hướng lỗi
+- http: 
