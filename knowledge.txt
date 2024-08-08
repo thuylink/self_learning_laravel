@@ -7,4 +7,111 @@ chạy trên trình duyệt thông qua giao thức http nhưng
 cũng có code chạy qua console
 - exception (laravel 11 k có) chứa những files liên
 quan đến điều hướng lỗi
-- http: 
+- http:
+
+
+2. route
+Route::get($uri, $callback);
+Route::post($uri, $callback);  submit form, tạo mới tài nguyên lên hệ thống
+Route::put($uri, $callback);  cập nhật tất cả
+Route::patch($uri, $callback);  cập nhật từng phần
+Route::delete($uri, $callback);
+Route::options($uri, $callback);
+
+- laravel cung cấp các method phù hợp với phương thức http
+để tương tác thoải mái với giao thức http
+- ngoài còn 2 methods khác là match và any
+
+Route::match(['get', 'post'], '/', function () {
+    // cùng 1 đường dẫn thì có thể chứa nhiều phương thức
+});
+
+Route::any('/', function () {
+    // trên 1 đường dẫn có thể chứa tất cả phương thức
+});
+
+3. Vòng đời request
+- Đầu tiên chạy vào public/index.php
+- Chạy vào bootstrap/app.php
+
+- đối với các phiên bản trước, sau khi vào
+bootstrap/app.php thì vào App\Http\Kernel::class
+- tại Kernel lọc rất nhiều thứ. Tức là trc đi đến bước xử lý
+request thì thông qua Kernel
+- đến provider để chạy các service
+- router
+- middleware là bộ lọc request, kiểm tra thỏa mãn đk mới được đi tiếp,
+k thỏa mãn thì dừng lại và chuyển sang hướng khác
+- controller
+- sau đó hoặc trả về view và response cho client (Cụ thể là trình duyệt)
+- hoặc trả về kết quả (vd trong th viết api thì trả json hoặc xml)
+- trả về trình duyệt (browser)
+
+
+4. Cấu hình cần thiết
+- cấu hình trong folder config và bootstrap
+- trong .env
+- tạo application key -> php artisan key:generate
+- thiết lập timezone -> config/app.php
+- thiết lập môi trường -> .env
+- thiết lập csdl -> .env
+- bật chế độ bảo trì -> php artisan down
+
+
+5. router
+- định tuyến các url path tương ứng với các controller,
+action, view, command line tương ứng hoặc bất kì công việc
+nào (trong phạm vi cho phép của fr đó)
+- có 4 loại route (web, api, console, channel)
+
+
+6. request
+(?) Tìm hiểu ý nghĩa của Laravel Request, nó được sử dụng để làm gì?
+- Laravel Request là 1 class được xây dwujng sẵn để cung cấp dữ liệu
+HTTP Request và cho phép thao tác với các HTTP Request
+-
+
+(?) Làm thế để sử dụng Laravel Request
+- use Illuminate\Http\Request
+- Khai báo Request là 1 tham số của phương thức
+
+(?) Tìm hiểu các phương thức và thuộc tính của Request
+- lấy ra danh sách tất cả dữ liệu của request hiện tại $request->all()
+- $request->path()
+- $request->is()
+- $request->url()
+- $request->fullUrl()
+- request->method()
+- request->isMethod()
+- request->ip()
+- request->server()
+- request->header()
+- request->input()
+- request->name()
+
+(?) Tìm hiều các helper của request (các helper có thể sử dụng luôn ở controller
+hoặc sử dụng nhiều ở view)
+
+
+
+
++ git init: khởi tạo repository
++ git branch: xem danh sách nhánh
++ git branch name_new_branch: tạo 1 nhánh mới
++ git checkout name_branch: di chuyển sang nhánh khác
++ git checkout -b name_new_brach: tạo nhánh mới và di chuyển sang nhánh vừa tạo
++ git status: kiểm tra sự thay đổi trên git
++ git add name_file: đưa 1 file lên 1 nhánh (lưu lịch sử)
++ git commit -m : chính thức đưa file lên nhánh
++ git merge ten_nhanh_merge: meger một nhánh khác trên một nhánh đang đứng
++ git branch -d name_branch: xoá 1 nhánh
++ git branch -D name_branch: xoá 1 nhánh có sự thay đổi nhưng chưa merge
++ git log: xem lịch sử trên 1 nhánh
++ git commit --amend: sửa lại commit hoặc add thêm file cho commit đã commit gần nhất
++ git reset --soft HEAD~1: quay lại 1 commit đã commit trước đó, và giữ lại những thay đổi ở hiện tại
++ get reset --soft HEAD~1: quay lại đúng trạng thái commit lần trước của mình
++ git clean --force: xoá hết các file chưa được commit
+- thay đổi tên tác giả của commit
+ + git config user.name "Nguyen Van A"
+ + git config user.email vana@gmal.com
+ + git commit --amend --reset-author
