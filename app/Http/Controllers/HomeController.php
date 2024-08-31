@@ -40,7 +40,8 @@ class HomeController extends Controller
         return 'danh sách tin tức' . $id;
     }
 
-    public function getProductDetail($id) {
+    public function getProductDetail($id)
+    {
         return view('clients.products.detail', compact('id'));
     }
 }

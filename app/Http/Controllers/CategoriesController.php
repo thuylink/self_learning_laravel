@@ -42,9 +42,18 @@ class CategoriesController extends Controller
 
         // dd($request->header()['accept']);
 
-        $input = $request->input();
+        // $input = $request->input('id.*.name');
         // dd($request->input('id'));
-        dd($input);
+
+        // dd($request->id['0']);
+
+        // $id = $request->query('id');
+
+        // dd($id);
+        // dd(request('id'));
+
+        $query = $request->query();
+        dd($query);
         return view('clients/categories/list');
     }
 
@@ -56,7 +65,11 @@ class CategoriesController extends Controller
 
     public function create(Request $request)
     {
-        dd($request->path());
+        // dd($request->path());
+        $old = $request->old('name_category');
+        // $cateName = $old;
+        // echo ($old);
+        // return view('clients/categories/create', compact('cateName'));
         return view('clients/categories/create');
 
     }
@@ -67,8 +80,18 @@ class CategoriesController extends Controller
         // print_r($_POST);
         // echo '</pre>';
         // return redirect(route('category.add'));
-        dd($request->all());
+        // dd($request->all());
+        // dd($request->all()['name_category']);
+        // dd($request->input('name_category'));
+        if ($request->has('name_category')) {
+            $cateName = $request->name_category;
+            $request->flash();  //set session flash
+            return redirect(route('category.add'));
+            // dd($cateName);
 
+        } else {
+            // dd('k có');
+        }
     }
 
     public function update($id)
@@ -81,5 +104,49 @@ class CategoriesController extends Controller
     {
         return 'delete category controller';
 
+    }
+
+    public function uploadFileForm()
+    {
+        return view('clients/categories/file');
+    }
+
+    public function handleFile(Request $request)
+    {
+        $file = $request->file;
+        // dd($file);
+
+        //check file is uploaded to server or not/
+        if ($request->hasFile('file')) {
+            echo 'exist file on server' . '<br/>';
+        } else {
+            echo 'not found' . '<br/>';
+        }
+
+        //check file is uploaded successfully
+        if ($request->file('file') && $request->file('file')->isValid()) {
+            echo 'upload file ok' . '<br/>';
+            // $path = $request->file->path();
+            $extension = $request->file->extension();
+            // dd($path, $extension);
+        } else {
+            echo 'upload file fail' . '<br/>';
+        }
+
+        //storing upload file, file images tự động tạo khi chưa tồn tại
+        // $path = $request->file->store('images'); //nếu không chuyển j thì mặc định local
+        // $path = $request->file->store('images', 's3'); //di chuyển đám mây, bên thứ 3
+        // dd($path);
+
+        //tự động đổi thành tên khác từ images thành changefile.jpg
+        // $path = $request->file->storeAs('images', 'changefile.jpg');
+        // dd($path);
+
+        //muốn lấy tên gốc của file đã chọn
+        // $fileName = $file->getClientOriginalName();
+        // dd($fileName);
+
+        //rename
+        // $fileName = ame);
     }
 }

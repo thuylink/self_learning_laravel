@@ -81,16 +81,80 @@ HTTP Request và cho phép thao tác với các HTTP Request
 - $request->is()
 - $request->url()
 - $request->fullUrl()
-- request->method()
-- request->isMethod()
-- request->ip()
-- request->server()
-- request->header()
-- request->input()
-- request->name()
+- $request->method()
+- $request->isMethod()
+- $request->ip()
+- $request->server()
+- $request->header()
+- $request->input()
+- $request->name
+- $request->query() trả về mảng, chỉ hiện query string, k lấy data qua form được
+- $request->has()  ktra có trường name_category k chứ k phải ktra xem nó có được gửi data k
+- $request->flash() đưa tất cả các dữ liệu input vào trong session (session chỉ tồn tại
+trong tgian ngắn, tự độ xóa khi reload)
+- $request->old()
+- $request->file()
 
 (?) Tìm hiều các helper của request (các helper có thể sử dụng luôn ở controller
 hoặc sử dụng nhiều ở view)
+- request() thường dùng để gọi view
+- request('key', 'default')
+- old('key', 'default')
+
+
+7. Response
+- Mỗi request từ trình duyệt gửi lên máy chủ web. Sau đó, serve xử lý và trả
+về respone
+- Response là kết quả trả về (có thể là nội dung hay đi kèm với các thông tin)
+- Trả về trình duyệt để hiển thị cho người dùng
+- Laravel cung cấp rất nhiều phương thức để trả về các Response, các Response
+có thể được trả về tại các Route hoặc các phương thức của Controller
+
+a. HTTP Response cơ bản
+- Cơ bản nhất là trả về ngay tại route ở dạng chuỗi hoặc mảng (router/controller)
+- return view()
+
+b. HTTP Response Instance
+
+Thay đổi trạng thái của Response
+- Mặc định thành công thì trả 200, tuy nhiên với TH api, không muốn dùng
+response mặc định (tìm hiểu response code)
+- successfull 200-299
+
+Trả về response dạng json
+
+Trả về response dạng chuyển hướng redirect
+
+
+Gán thông tin header vào response
+
+
+Feature test là gì?
+- là kiểm thử tính đúng đắn của api, kết quả trả về HTTP Request json..,
+test các chức năng hiệu năng và khả năng chịu tải của ứng dụng
+
+Tại sao cần phải có test?
+- Hạn chế lỗi, duy trì sự ổn định phần mềm
+- Phát hiện các thuật toán không hiệu quả, khiến chức năng bị timeout
+- Phát hiện các vấn đề thiết kết
+- Phát hiện các lỗi nghiệm trọng có thể xảy ra trong các trường hợp hiếm gặp
+
+Đặt tên file
+- Theo chức năng cần test + hậu tố Test. Vd: php artisan make: ClassNameTest
+
+Đặt tên hàm
+- phần comment phải có @test, tên hàm sẽ mô tả case xảy ra mình cần test
+ở dạng snack_case
+
+/** @test */
+public function snack_case_method()
+{
+
+
+}
+
+
+
 
 
 
